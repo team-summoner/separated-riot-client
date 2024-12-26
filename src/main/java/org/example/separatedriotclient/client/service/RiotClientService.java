@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.example.separatedriotclient.client.enums.QueueType.QUICK;
+import static org.example.separatedriotclient.client.enums.QueueType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -71,14 +71,14 @@ public class RiotClientService {
             int wins = leagueInfo.getWins();
             int losses = leagueInfo.getLosses();
 
-            if (leagueInfo.getQueueType().equals("SOLO")) {
+            if (leagueInfo.getQueueType().equals(SOLO.getQueueType())) {
                 soloWins = wins;
                 soloLosses = losses;
                 soloTotalGames = wins + losses;
                 soloTier = leagueInfo.getTier();
                 soloRank = leagueInfo.getRank();
             }
-            else if (leagueInfo.getQueueType().equals("FLEX")) {
+            else if (leagueInfo.getQueueType().equals(FLEX.getQueueType())) {
                 flexWins = wins;
                 flexLosses = losses;
                 flexTotalGames = wins + losses;
@@ -194,14 +194,9 @@ public class RiotClientService {
             }
         }
 
-        double averageKill = 0;
-        double averageDeath = 0;
-        double averageAssist = 0;
-        if (!limitedMatchIds.isEmpty()) {
-            averageKill = (double) totalKills / limitedMatchIds.size();
-            averageDeath = (double) totalDeath / limitedMatchIds.size();
-            averageAssist = (double) totalAssists / limitedMatchIds.size();
-        }
+        double averageKill = (double) totalKills / totalGames;
+        double averageDeath = (double) totalDeath / totalGames;
+        double averageAssist = (double) totalAssists / totalGames;
 
         return new RiotApiMatchInfoResponse(
                 winCount, totalGames - winCount, totalGames, request.getQueueType(),

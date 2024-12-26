@@ -24,9 +24,9 @@ public class RiotClient {
 
     private final RestTemplate restTemplate;
     private final Map<String, String> regionBaseUrls = Map.of(
-            "ASIA", "https://americas.api.riotgames.com",
+            "ASIA", "https://asia.api.riotgames.com",
             "AMERICAS", "https://americas.api.riotgames.com",
-            "EUROPE", "https://americas.api.riotgames.com"
+            "EUROPE", "https://europe.api.riotgames.com"
     );
 
     @Value("${riot.api.key}")
